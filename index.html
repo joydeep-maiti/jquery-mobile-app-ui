@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+    <head>
+
+        <!-- Include meta tag to ensure proper rendering and touch zooming -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <!-- Include jQuery Mobile stylesheets -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+        <!-- Include the jQuery library -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
+        <!-- Include the jQuery Mobile library -->
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+    </head>
+    
+    <body>
+        <div data-role="page" data-theme="b" id="page1">
+    
+            <div class="header" data-role="header">
+                <h1 id="titleHead" allign>WhatsApp-Clone</h1>
+                    <div data-role="navbar">
+                        <ul>
+                            <li>
+                                <a href="#page1" data-transition="fade">CHATS</a>
+                            </li>
+                            <li>
+                                <a href="#page2" data-transition="fade">STATUS</a>
+                            </li>
+                            <li>
+                                <a href="#page3" data-transition="fade">CALLS</a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+    
+            <div data-role="main" class="ui-content">
+                <p>This is Chat Page</p>
+                <p>Click on the link to see the slidefade effect.</p>
+                <a href="#page2" data-transition="slidefade">Slidefade to Page Two</a>
+            </div>
+
+        </div>
+        <div data-role="page" data-theme="b" id="page2">
+        
+            <div class="header" data-role="header">
+                <h1 id="titleHead" allign>WhatsApp-Clone</h1>
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-transition="fade">CHATS</a>
+                        </li>
+                        <li>
+                            <a href="#page2" data-transition="fade">STATUS</a>
+                        </li>
+                        <li>
+                            <a href="#page3" data-transition="fade">CALLS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role="main" class="ui-content">
+                <p>This is status Page</p>
+                <p>Click on the link to see the slidefade effect.</p>
+                <a href="#page1" data-transition="slidefade">Slidefade to Page One</a>
+            </div>
+            
+        
+        </div>
+        <div data-role="page" data-theme="b" id="page3">
+        
+            <div class="header" data-role="header">
+                <h1 id="titleHead" allign>WhatsApp-Clone</h1>
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-transition="fade">CHATS</a>
+                        </li>
+                        <li>
+                            <a href="#page2" data-transition="fade">STATUS</a>
+                        </li>
+                        <li>
+                            <a href="#page3" data-transition="fade">CALLS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+            <div data-role="main" class="ui-content">
+                <p>This is calls page</p>
+                <p>Click on the link to see the slidefade effect.</p>
+                <a href="#page2" data-transition="slidefade">Slidefade to Page Two</a>
+            </div>
+        
+        </div>
+
+        
+
+    </body>
+</html>
