@@ -13,15 +13,23 @@
     
         <!-- Include the jQuery Mobile library -->
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    
+        <style>
+            /* .header {
+                background-color: rgb(3, 71, 43);
+            } */
+            h1 {
+                color: aliceblue;
+                
+            }
+        </style>
     </head>
     
     <body>
-        <div data-role="page" data-theme="b" id="page1">
+        <div data-role="page" data-theme="a" id="page1" background-color: rgb(3, 71, 43);>
     
-            <div class="header" data-role="header">
-                <h1 id="titleHead" allign>WhatsApp-Clone</h1>
-                    <div data-role="navbar">
+            <div class="header" data-role="header" >
+                <h1 id="titleHead" style="color: white;" >WhatsApp-Clone</h1>
+                    <div class="nav" data-role="navbar" style="background-color: rgb(3, 71, 43);">
                         <ul>
                             <li>
                                 <a href="#page1" data-transition="fade">CHATS</a>
@@ -38,16 +46,62 @@
     
             <div data-role="main" class="ui-content">
                 <p>This is Chat Page</p>
-                <p>Click on the link to see the slidefade effect.</p>
-                <a href="#page2" data-transition="slidefade">Slidefade to Page Two</a>
+                <form class="ui-filterable">
+                    <input id="myFilter" data-type="search">
+                </form>
+
+                <ul data-role="listview" data-autodividers="true" data-inset="true"  data-filter="true" data-input="#myFilter">
+                    <li>
+                        <a href="#">Adele</a>
+                    </li>
+                    <li>
+                        <a href="#">Agnes</a>
+                    </li>
+                    <li>
+                        <a href="#">Albert</a>
+                    </li>
+                    <li>
+                        <a href="#">Billy</a>
+                    </li>
+                    <li>
+                        <a href="#">Bob</a>
+                    </li>
+                    <li>
+                        <a href="#">Calvin</a>
+                    </li>
+                    <li>
+                        <a href="#">Cameron</a>
+                    </li>
+                    <li>
+                        <a href="#">Chloe</a>
+                    </li>
+                    <li>
+                        <a href="#">Christina</a>
+                    </li>
+                    <li>
+                        <a href="#">Diana</a>
+                    </li>
+                    <li>
+                        <a href="#">Gabriel</a>
+                    </li>
+                    <li>
+                        <a href="#">Glen</a>
+                    </li>
+                    <li>
+                        <a href="#">Ralph</a>
+                    </li>
+                    <li>
+                        <a href="#">Valarie</a>
+                    </li>
+                </ul>
             </div>
 
         </div>
-        <div data-role="page" data-theme="b" id="page2">
+        <div data-role="page" data-theme="a" id="page2">
         
-            <div class="header" data-role="header">
+            <div class="header" data-role="header" >
                 <h1 id="titleHead" allign>WhatsApp-Clone</h1>
-                <div data-role="navbar">
+                <div class="nav" data-role="navbar">
                     <ul>
                         <li>
                             <a href="#page1" data-transition="fade">CHATS</a>
@@ -63,17 +117,16 @@
             </div>
             <div data-role="main" class="ui-content">
                 <p>This is status Page</p>
-                <p>Click on the link to see the slidefade effect.</p>
-                <a href="#page1" data-transition="slidefade">Slidefade to Page One</a>
+                
             </div>
             
         
         </div>
-        <div data-role="page" data-theme="b" id="page3">
+        <div data-role="page" data-theme="a" id="page3">
         
-            <div class="header" data-role="header">
+            <div class="header" data-role="header" >
                 <h1 id="titleHead" allign>WhatsApp-Clone</h1>
-                <div data-role="navbar">
+                <div class="nav" data-role="navbar">
                     <ul>
                         <li>
                             <a href="#page1" data-transition="fade">CHATS</a>
@@ -90,8 +143,7 @@
         
             <div data-role="main" class="ui-content">
                 <p>This is calls page</p>
-                <p>Click on the link to see the slidefade effect.</p>
-                <a href="#page2" data-transition="slidefade">Slidefade to Page Two</a>
+                
             </div>
         
         </div>
