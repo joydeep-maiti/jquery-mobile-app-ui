@@ -1,3 +1,8 @@
+<?php
+  include('conn.php');
+//   if(isset($_SESSION['UID'])) {
+
+?>
 <!DOCTYPE html>
 <html class="ui-mobile">
     <head>
@@ -6,21 +11,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     
         <!-- Include jQuery Mobile stylesheets -->
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-
+        <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
+        <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.css">
         <!-- Include the jQuery library -->
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-     
+        <!-- <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+        <script src="./js/jquery-1.11.1.min.js"></script>
         <!-- Include the jQuery Mobile library -->
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <!-- <link rel="stylesheet" href="jquery.mobile-1.4.5.css"> -->
-        
-        <!-- Include the jQuery library -->
-        <!-- <script src="jquery-1.11.1.min.js"></script> -->
-        
-        <!-- Include the jQuery Mobile library -->
-        <!-- <script src="jquery.mobile-1.4.5.min.js"></script> -->
+        <!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+        <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="./js/jquery.min.js"></script>
+    
         <style>
             /* .header {
                 background-color: rgb(3, 71, 43);
@@ -33,6 +34,11 @@
                 text-align: left;
                 margin: 5%;
                 margin-left: 10%;
+            }
+            #userdis {
+                text-align: left;
+                margin: 5px;
+                margin-top: 5%;
             }
             #other-color {
                 background: rgb(151, 21, 60);
@@ -154,8 +160,9 @@
             #chat_data {
                 size : 5px;
             }
-
-
+            #form_chat li a {
+                padding:10px;
+            }
 
         </style>
     </head>
@@ -219,7 +226,7 @@
                 </form>
 
                 <ul data-role="listview" data-autodividers="true" data-inset="true" placeholder="Search for contacts" data-filter="true" data-input="#myFilter">
-                    <li>
+                    <!-- <li>
                         <a href="./chats.php" id='adele'>Adele</a>
                     </li>
                     <li>
@@ -227,7 +234,28 @@
                     </li>
                     <li>
                         <a href="#chat_main">Albert</a>
-                    </li>
+                    </li> -->
+                    <?php
+                        $sel = "SELECT * FROM users";
+                        $res = $con->query($sel);
+                        while($row = $res->fetch_assoc())
+                        {
+
+                    ?>
+                    <tr>
+                        <td>
+                            <!-- <form action="#chat_container" method="post"> -->
+                            <form id='form_chat'>
+                                <input type="hidden" id='user_id' value=<?php echo $row['userid'] ?> name="id" >
+                                <!-- <input type='submit' name="sub" value=> -->
+                                <p><a href="#chat_container" data-role='button' id='user_name'><?php echo $row['name'] ?></a></p>
+                                    
+                            </form>
+                        </td>    
+                    </tr>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </div>
 
@@ -337,7 +365,7 @@
         </div>
         <div data-role="page" data-theme="a" id="chat_container" >
             <div class="header" data-role="header" style="background-color: rgb(151, 21, 60)">
-                <h2>Chat here</h2>
+                <h1 id='userdis'>Username here</h1>
             </div>
             <div data-role="main" class="ui-content">
                 <!-- <li><h1 id='data'></h1><li> -->
@@ -346,28 +374,27 @@
             <div class="footer" data-role="footer" style="background-color: rgb(151, 21, 60)">
                 <form id='my_form'>
                     <input type='text' id='text' name='text' autofocus placeholder='type here'>
-                    <input type='submit' id='btn' name='sub' value='Send'></input>
+                    <input type='submit' id='btn_send' name='sub' value='Send'></input>
                 </form>
             </div>
         </div>
         <script>
-            function dis() {
+            function display_chats() {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.open('GET', 'form-cont.php', false);
                 xmlhttp.send(null);
                 document.getElementById('data').innerHTML = xmlhttp.responseText;
             }
-            console.log('in dis');
-            dis();
+            display_chats();
             setInterval(()=> {
-                dis();
+                display_chats();
             }, 2000);
             $('#adele').on('click', (event)=> {
                 console.log('preventing');
                 event.stopPropagation();
                 event.preventDefault();
             });
-            $('#btn').click(function(e) {
+            $('#btn_send').click(function(e) {
                 var data = $("#text").serialize();
                 // 
                 $.ajax({
@@ -383,7 +410,10 @@
             $('#my_form').submit(()=> {
                 return false;
             });
+            $(document).on('pagebeforeshow', '#page2', function(e, data){     
+                alert("user id is " + data.prevPage.find('#user_id').val());
+            });
         </script>
-        <script src="jquery.min.js"></script>
+        
     </body>
 </html>

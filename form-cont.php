@@ -1,5 +1,5 @@
 <?php
-    $con = mysqli_connect("localhost", "root", "", "prj");
+    include('conn.php');
     mysqli_select_db($con, "autorefresh");
         $sel = "SELECT * FROM chats";
             $res = $con->query($sel);

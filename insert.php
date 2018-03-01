@@ -1,5 +1,5 @@
 <?php
-    $con = mysqli_connect("localhost", "root", "", "prj");
+    include('conn.php');
 
     // if(isset($_POST["sub"])) {
         $text = $_POST["text"];
