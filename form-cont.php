@@ -2,7 +2,9 @@
     include('conn.php');
     mysqli_select_db($con, "autorefresh");
         $sender = $_POST['username'];
-        $sel = "SELECT * FROM chats WHERE sender='$sender'";
+        // $sel = "SELECT * FROM chats "; 
+        // -- sender in ('$sender','admin)' AND receiver in ('admin','$sender)";
+        $sel = "SELECT * FROM `chats` WHERE (sender='$sender' AND receiver='admin') OR (sender='admin' AND receiver='$sender')";
             $res = $con->query($sel);
             while($row = $res->fetch_assoc())
             {?>

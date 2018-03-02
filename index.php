@@ -236,7 +236,7 @@
                         <a href="#chat_main">Albert</a>
                     </li> -->
                     <?php
-                        $sel = "SELECT * FROM users";
+                        $sel = "SELECT * FROM users WHERE NOT name='admin'";
                         $res = $con->query($sel);
                         while($row = $res->fetch_assoc())
                         {
@@ -429,7 +429,12 @@
                 username = e.currentTarget.innerHTML;
                 console.log(username)
                 $('#userdis')[0].innerHTML = username;
-            })
+            });
+            $(window).on('popstate', function() {
+                // alert('Back button was pressed.');
+                username='not exist';
+                console.log(username);
+            });
         </script>
         
     </body>
