@@ -245,11 +245,10 @@
                     <tr>
                         <td>
                             <!-- <form action="#chat_container" method="post"> -->
-                            <form id='form_chat'>
+                            <form id='form_chat' >
                                 <input type="hidden" id='user_id' value=<?php echo $row['userid'] ?> name="id" >
                                 <!-- <input type='submit' name="sub" value=> -->
-                                <p><a href="#chat_container" data-role='button' id='user_name'><?php echo $row['name'] ?></a></p>
-                                    
+                                <p><a  href="#chat_container" data-role='button' class='user_name'><?php echo $row['name'] ?></a></p>        
                             </form>
                         </td>    
                     </tr>
@@ -364,8 +363,9 @@
         
         </div>
         <div data-role="page" data-theme="a" id="chat_container" >
+        
             <div class="header" data-role="header" style="background-color: rgb(151, 21, 60)">
-                <h1 id='userdis'>Username here</h1>
+                        <h1 id='userdis'>username</h1>
             </div>
             <div data-role="main" class="ui-content">
                 <!-- <li><h1 id='data'></h1><li> -->
@@ -379,23 +379,34 @@
             </div>
         </div>
         <script>
+            var username;
             function display_chats() {
+                var formData = new FormData();
+                formData.append("username", username);
+                var data = $("#text").serialize();
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open('GET', 'form-cont.php', false);
-                xmlhttp.send(null);
+                xmlhttp.open('POST', 'form-cont.php', false);
+                xmlhttp.send(formData);
                 document.getElementById('data').innerHTML = xmlhttp.responseText;
             }
             display_chats();
             setInterval(()=> {
                 display_chats();
             }, 2000);
-            $('#adele').on('click', (event)=> {
-                console.log('preventing');
-                event.stopPropagation();
-                event.preventDefault();
-            });
+            // $('#adele').on('click', (event)=> {
+            //     console.log('preventing');
+            //     event.stopPropagation();
+            //     event.preventDefault();
+            // });
             $('#btn_send').click(function(e) {
-                var data = $("#text").serialize();
+                var data = $("#text").serializeArray();
+                data.push({name: 'username', value:username});
+                console.log(data);
+                // var formData = new FormData();
+                // console.log(formData);
+                // formData.append("username", username);
+                // console.log(formData);
+                // formData.append("text", data);
                 // 
                 $.ajax({
                         data: data,
@@ -410,9 +421,15 @@
             $('#my_form').submit(()=> {
                 return false;
             });
-            $(document).on('pagebeforeshow', '#page2', function(e, data){     
-                alert("user id is " + data.prevPage.find('#user_id').val());
-            });
+            // $(document).on('pagebeforeshow', '#page2', function(e, data){     
+            //     alert("user id is " + data.prevPage.find('#user_id').val());
+            // });
+            $('.user_name').click((e)=> {
+                console.log(e);
+                username = e.currentTarget.innerHTML;
+                console.log(username)
+                $('#userdis')[0].innerHTML = username;
+            })
         </script>
         
     </body>
