@@ -1,5 +1,6 @@
 <?php
   include('conn.php');
+//   include('loggedUser.php');
 //   if(isset($_SESSION['UID'])) {
 
 ?>
@@ -15,12 +16,18 @@
         <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.css">
         <!-- Include the jQuery library -->
         <!-- <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+        
         <script src="./js/jquery-1.11.1.min.js"></script>
+        
         <!-- Include the jQuery Mobile library -->
         <!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
-        <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script src="./js/jquery.mobile-1.4.5.min.js"></script> -->
+        
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
         <script src="./js/jquery.min.js"></script>
+        <!-- <script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script> -->
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> 
+        <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     
         <style>
             /* .header {
@@ -236,7 +243,14 @@
                         <a href="#chat_main">Albert</a>
                     </li> -->
                     <?php
-                        $sel = "SELECT * FROM users WHERE NOT name='admin'";
+                        // $loggedUser =  "<script type=\"text/javascript\">localStorage.getItem('loggedUser')</script>";
+                        // $sel = "SELECT * FROM users WHERE NOT name= '$loggedUser'";
+                        // $res = $con->query($sel);
+                        // $loggedUser = "<script>document.write('admin');</script>";
+                        // $sel = "SELECT * FROM users WHERE NOT name= '$loggedUser'";
+                        // $res = $con->query($sel);
+                        $phpVar =  $_COOKIE['loggedUser'];
+                        $sel = "SELECT * FROM users WHERE NOT name= '$phpVar'";
                         $res = $con->query($sel);
                         while($row = $res->fetch_assoc())
                         {
@@ -364,14 +378,14 @@
         </div>
         <div data-role="page" data-theme="a" id="chat_container" >
         
-            <div class="header" data-role="header" style="background-color: rgb(151, 21, 60)">
+            <div class="header" data-role="header" data-position="fixed" style="background-color: rgb(151, 21, 60)">
                         <h1 id='userdis'>username</h1>
             </div>
-            <div data-role="main" class="ui-content">
+            <div data-role="main" class="ui-content chats">
                 <!-- <li><h1 id='data'></h1><li> -->
                 <div id="data"></div>
             </div>
-            <div class="footer" data-role="footer" style="background-color: rgb(151, 21, 60)">
+            <div class="footer" data-role="footer" data-position="fixed" style="background-color: rgb(151, 21, 60)">
                 <form id='my_form'>
                     <input type='text' id='text' name='text' autofocus placeholder='type here'>
                     <input type='submit' id='btn_send' name='sub' value='Send'></input>
@@ -379,7 +393,17 @@
             </div>
         </div>
         <script>
-            var username;
+            var username = localStorage.getItem('username');
+            var initialHeight=0;
+            $('#userdis')[0].innerHTML = username;
+            function getCookie(name) {
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length == 2) return parts.pop().split(";").shift();
+            }
+            
+            var loggedUser = getCookie('loggedUser');
+
             function display_chats() {
                 var formData = new FormData();
                 formData.append("username", username);
@@ -388,16 +412,29 @@
                 xmlhttp.open('POST', 'form-cont.php', false);
                 xmlhttp.send(formData);
                 document.getElementById('data').innerHTML = xmlhttp.responseText;
+                const messages = document.getElementById('data');
+                var currentHeight = 0;
+                console.log('ini:',initialHeight);
+                
+                $('#data').each(function(i, value){
+                    currentHeight += parseInt($(this).height());
+                });
+                if(currentHeight != initialHeight) {
+                    $.mobile.silentScroll(currentHeight);
+                    console.log('cur:',currentHeight);
+                    initialHeight = currentHeight;  
+                }    
+                
+                // messages.scrollTop=200;
+                // console.log('cur:',currentHeight);
+                // $('#data').animate({"scrollTop": 260});
+                
             }
             display_chats();
             setInterval(()=> {
                 display_chats();
-            }, 2000);
-            // $('#adele').on('click', (event)=> {
-            //     console.log('preventing');
-            //     event.stopPropagation();
-            //     event.preventDefault();
-            // });
+            }, 1000);
+
             $('#btn_send').click(function(e) {
                 var data = $("#text").serializeArray();
                 data.push({name: 'username', value:username});
@@ -426,8 +463,9 @@
             // });
             $('.user_name').click((e)=> {
                 console.log(e);
-                username = e.currentTarget.innerHTML;
-                console.log(username)
+                var chaterName = e.currentTarget.innerHTML;
+                localStorage.setItem('username',chaterName);
+                username = chaterName;
                 $('#userdis')[0].innerHTML = username;
             });
             $(window).on('popstate', function() {
@@ -435,6 +473,8 @@
                 username='not exist';
                 console.log(username);
             });
+            
+            
         </script>
         
     </body>
